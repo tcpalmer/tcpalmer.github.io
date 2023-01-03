@@ -40,6 +40,7 @@ Pass 3 determines the best single target to image at the current time.
     - Season Limit: assign a higher score to targets that have shorter remaining imaging seasons.
     - Meridian Flip: assign a lower score to targets that will require an immediate MF.  Related: if a target is east of the meridian but 'close' (check NINA profile MF settings), don't switch to it until it's well past the meridian.
     - Percent Complete: assign a higher score to targets that are closer to 100% complete to wrap them up.
+    - Switch penalty: assign a higher score to the current target (if it's stop time is still in the future) and lower scores to others.  This assigns some cost to the time to switch to another target (slew/center) and ideally prevents target thrashing.
     - Mosaic completion priority: assign a higher score to mosaic targets that are closer to 100% complete to wrap them up.
     - Mosaic balance priority: assign a higher score to mosaic targets that are closer to 0% complete to balance exposures across frames.  (Obviously in conflict with Mosaic completion priority so only one should be used.)
 
