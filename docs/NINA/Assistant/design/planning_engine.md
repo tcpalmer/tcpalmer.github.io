@@ -12,14 +12,13 @@ Engine execution consists of a number of passes that refine the set of potential
 ## Pass 1
 Pass 1 determines the set of targets that could _potentially_ be imaged at the current time.  An active target is one that is incomplete, is in the Active state, and the current date is within the project begin/end dates.
 - For each active project:
-  - For each unfinished target, based on date and location: 
-    - Find most inclusive twilight over all incomplete exposure plans 
-    - Is it visible (above horizon) for that begin/end twilight period? 
-    - Is the time-on-target > minimum imaging time? 
-    - If meridian window is in use, is the time in the window > minimum imaging time? 
+  - For each unfinished target, based on date and location:
+    - Find most inclusive twilight over all incomplete exposure plans.
+    - Is it visible (above horizon) for that begin/end twilight period?
+    - Is the time-on-target > minimum imaging time?
     - If yes to all, add to potential target list
 
-Potential targets have hard start/stop times determined by twilight, horizon, or meridian window.
+Potential targets have hard start/stop times determined by twilight or horizon.
 
 ## Pass 2
 Pass 2 applies the Moon Avoidance formula for each filter of each potential target, removing those exposures that fail the check.
@@ -37,7 +36,8 @@ Pass 3 determines the best single target to image at the current time.
 - Otherwise, there are two or more targets available so a decision has to be made on whether to continue with the current target or switch to another.  A set of rules will be applied that determine an overall score for each potential target. Sample rules:
 
     - Project Priority: score based on low/normal/high priority of the project
-    - Time Limit: assign a higher score to targets that are setting 'soon' or 'near' the western meridian window limit.  This helps to avoid missing opportunities to image a target before it sets for the year.
+    - Meridian window: assign a higher score to targets that would be taking exposures closer to the meridian sweet spot.  Would need to compute a metric based on the target time span overlap with changing distance from the meridian (integrate).
+    - Time Limit: assign a higher score to targets that are setting 'soon'.  This helps to avoid missing opportunities to image a target before it sets for the year.
     - Season Limit: assign a higher score to targets that have shorter remaining imaging seasons.
     - Meridian Flip: assign a lower score to targets that will require an immediate MF.  Related: if a target is east of the meridian but 'close' (check NINA profile MF settings), don't switch to it until it's well past the meridian.
     - Percent Complete: assign a higher score to targets that are closer to 100% complete to wrap them up.

@@ -15,7 +15,6 @@ The model for preferences is still a work in progress but will likely store pref
 - Project
   - EnableGrader: enable/disable the simple [image grader](image_grader.html) for this project.
   - MinimumTime: minimum time (in minutes) that a target must be available for imaging to consider inclusion for a night.
-  - MeridianWindow: value (in minutes) that limits imaging time to transit-value to transit+value.
   - Rule weights: a set of values (0-1) that are used to weight the impact of each rule used by the [Planning Engine](planning_engine.html).
 - Filter
   - TwilightInclude: the maximum level of dusk/dawn brightness suitable for imaging with a filter: civil, nautical, astronomical, nighttime
