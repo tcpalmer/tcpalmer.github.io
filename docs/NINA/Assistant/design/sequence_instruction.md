@@ -12,11 +12,11 @@ At imaging time, the Assistant is implemented by a single new sequence instructi
 - **Instructions**: A set of instructions to execute.  These are executed in order for sequential containers.  Examples include unpark, slew/center on a target, switch filters, take an exposure, etc.  When done and the loop end conditions have not been met, the instructions execute again.
 
 The **_Assistant_** instruction extends the base Sequential Instruction Set container.  It operates as follows:
-1. Run the [Planning Engine](planning_engine.html) and get the next target to image.  End execution if none are returned.
+1. Run the [Planning Engine](planning_engine.html) (passing in the current target if available) and get the next target to image.  End execution if none are returned.
 2. Set the target details on the container (similar to the Deep Space Object Sequence container) to support the sequencer UI.
 3. If the start time for the target is in the future, wait for the start time.
 4. Set a trigger on the container to abort this target when the hard stop time is reached, taking into account the likely duration of the next instruction to execute.
-5. Add a slew/center/rotate instruction to the instruction list.
+5. Add a slew/center/rotate instruction to the instruction list.  Note that this is only necessary if the new target is different from the previous.
 6. Add the switch filter and exposure instructions for each planned exposure, with appropriate dither handling.
 7. Enable monitoring of image save events so that the image grader can run and the acquired images for this project/target can be updated.
 8. Execute the container.
@@ -42,6 +42,18 @@ The **_Assistant_** instruction has the potential to significantly simplify sequ
 ````
 
 Since the Assistant will manage the start/stop times for each selected target based on selected criteria and twilight, there's no real need to manage that explicitly in the sequence.
+
+### Assistant Instruction Validation
+When instructions are added to a sequence, a validator is run and the instruction can perform whatever validation steps it requires.  In the case of the Assistant, that might be:
+- Run the Planning Engine assuming the start time is sunset on this day (or now if between sunset and sunrise).  If no target is returned -> invalid.
+- Maybe: confirm mount is connected
+- Maybe: confirm camera is connected
+- Maybe: confirm filter wheel is connected (if needed by exposure plan)
+- Maybe: confirm rotator is connected (if needed by target)
+- Maybe: confirm guider is connected (if needed by dithering)
+
+### Assistant Instruction Error Handling
+Error handling is TBD.  See RunErrorBehavior() in SequenceItem.  Note interaction with the Attempts setting too.
 
 ### What your Sequence Still Needs
 The following is a sample of the sequence logic you'll still want.  It's not meant to be comprehensive or all-inclusive.  For example, triggers or instructions provided by other installed plugins will probably work just fine.

@@ -18,11 +18,17 @@ The **_Assistant_** plugin page will provide the UI to manage Projects, Targets,
 - Ability to edit Preferences.
 
 Other thoughts:
+- The plugin page will also provide a preview of what the [Planning Engine](planning_engine.html) would select for any given night.  Note that this might be significantly different from what actually happens but would at least give the user confidence that it's going to do approximately the right thing.
 - For active and completed projects, you should be able to see a summary of project status including:
   - Total time on each target
   - Total counts for the ExposurePlans for each target: desired, acquired, accepted
   - Total imaging time (hh:mm) for each ExposurePlan/filter
   - Sum totals for all targets for the project
+- It would be nice to see a report on how well the planner did over the course of a night:
+  - how many targets imaged
+  - how much time-on-target, exposure time for each target
+  - how much time spent in slew/centers
+  - how many MFs
 
 ## Sequence Instruction: Current Target and Progress
 The [Assistant Sequence Instruction](sequence_instruction.html) will have a UI in the Advanced Sequencer similar to the existing Deep Space Object Sequence container.  It will show the coordinates for the active Target plus the standard nighttime altitude chart.  It will not show the typical container slots for Triggers, Loop Conditions, and Instructions since those will be managed programmatically by the Assistant instruction.
