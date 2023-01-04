@@ -21,6 +21,7 @@ The model for preferences is still a work in progress but will likely store pref
   - TwilightInclude: the maximum level of dusk/dawn brightness suitable for imaging with a filter: civil, nautical, astronomical, nighttime
   - MoonAvoidanceSeparation: value (in degrees) for the Moon avoidance formula.
   - MoonAvoidanceWidth: value (in days) for the Moon avoidance formula.
+  - MaximumHumidity: value (percent) that sets the maximum humidity acceptable for the filter.
 
 The [Moon Avoidance](http://bobdenny.com/ar/RefDocs/HelpFiles/ACPScheduler81Help/Constraints.htm) approach is used instead of separate moon angle and illumination criteria since it encompasses both those in a more flexible model.
 

@@ -11,7 +11,14 @@ SQLlite will be used for the Assistant database:
 - NINA provides an example of how you can perform database migration if schema changes with new plugin versions.
 - Supports multiple concurrent processes having access to same database file.  One process will lock it for the duration of a write operation but should work fine.
 - Database will be saved to %localappdata%\NINA\Plugins\AssistantPlugin\.
-- Will almost certainly want to save separate databases per NINA profile.
+
+## Databases and NINA Profiles
+Conceptually, there is a separate database for each NINA profile since projects will likely depend on the equipment configured for that profile.
+
+However, we could have a single physical database but with the profile ID used to segregate projects/targets/etc.  This would have the following advantages:
+- It's conceptually simpler and easier to back up.
+- It would make it easier to copy projects/targets/prefs/etc from one profile set to another.
+- It might make it easier to have options for users with multiple synced instances of NINA so that the instances could share projects.
 
 ## Model
 
@@ -69,5 +76,5 @@ It remains to be seen how we would support different parameters like gain/offset
 ## Other Persistence Needs
 We might also need to persist the following information:
 - Have a table for acquired images with foreign keys to the project/target/exposure plan plus date/time, and the metrics used by the grader: HFR, star count, SQM, etc.  Could grab other available metrics like ADU stats, guiding RMS, etc.  This will permit the grader to compare a new image against those already taken for the target/filter/etc and look for significant deviations.
-- Have a table that records each unique filter used throughout an imaging session.  This could be used by a new Assistant Flat instruction to automatically take the flats needed for that night.
+- Have a table that records each unique filter used throughout an imaging session.  This could be used by a new Assistant Flat instruction to automatically take the flats needed for that night.  Would also need rotation angle if applicable.
 - Have a table that records what the planner did (and how well) on any given night: targets imaged, time on target/exposure time, time spent in slew/centers, how many MFs, etc.  Ideally, should be able to determine productive time ratio: total exposure time/total other time.

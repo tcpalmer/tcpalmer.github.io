@@ -17,7 +17,7 @@ The **_Assistant_** instruction extends the base Sequential Instruction Set cont
 3. If the start time for the target is in the future, wait for the start time.
 4. Set a trigger on the container to abort this target when the hard stop time is reached, taking into account the likely duration of the next instruction to execute.
 5. Add a slew/center/rotate instruction to the instruction list.  Note that this is only necessary if the new target is different from the previous.
-6. Add the switch filter and exposure instructions for each planned exposure, with appropriate dither handling.
+6. Add the switch filter and exposure instructions for each planned exposure, with appropriate dither handling.  Need to think about whether the humidity preference for the filter could abort exposures for that trigger.
 7. Enable monitoring of image save events so that the image grader can run and the acquired images for this project/target can be updated.
 8. Execute the container.
 9. Loop back to step 1.
@@ -42,6 +42,9 @@ The **_Assistant_** instruction has the potential to significantly simplify sequ
 ````
 
 Since the Assistant will manage the start/stop times for each selected target based on selected criteria and twilight, there's no real need to manage that explicitly in the sequence.
+
+### Other Considerations
+- Handling a maximum humidity could be done with a thin wrapper around TakeExposure that dynamically checks the observing conditions and decides whether to actually expose or not for this filter.
 
 ### Assistant Instruction Validation
 When instructions are added to a sequence, a validator is run and the instruction can perform whatever validation steps it requires.  In the case of the Assistant, that might be:
