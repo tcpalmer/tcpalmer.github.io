@@ -17,7 +17,7 @@ The **_Assistant_** instruction extends the base Sequential Instruction Set cont
 3. If the start time for the target is in the future, wait for the start time.
 4. Set a trigger on the container to abort this target when the hard stop time is reached, taking into account the likely duration of the next instruction to execute.
 5. Add a slew/center/rotate instruction to the instruction list.  Note that this is only necessary if the new target is different from the previous.
-6. Add the switch filter and exposure instructions for each planned exposure, with appropriate dither handling.  Need to think about whether the humidity preference for the filter could abort exposures for that trigger.
+6. Add the switch filter and exposure instructions for each planned exposure, with appropriate dither handling.  If the filter plan set a camera readout mode, add that instruction before the exposures.
 7. Enable monitoring of image save events so that the image grader can run and the acquired images for this project/target can be updated.
 8. Execute the container.
 9. Loop back to step 1.
@@ -44,14 +44,14 @@ The **_Assistant_** instruction has the potential to significantly simplify sequ
 Since the Assistant will manage the start/stop times for each selected target based on selected criteria and twilight, there's no real need to manage that explicitly in the sequence.
 
 ### Other Considerations
-- Handling a maximum humidity could be done with a thin wrapper around TakeExposure that dynamically checks the observing conditions and decides whether to actually expose or not for this filter.
+- Handling a maximum humidity could be done with a thin wrapper around TakeExposure that dynamically checks the observing conditions and decides whether to actually expose or not for this filter.  Note that by skipping exposures, the container will likely end before the hard stop trigger.  That's fine (it will just call the planner again) but it might be confusing that it's ending because it actually finished all the planned exposures rather than triggering.
 
 ### Assistant Instruction Validation
 When instructions are added to a sequence, a validator is run and the instruction can perform whatever validation steps it requires.  In the case of the Assistant, that might be:
 - Run the Planning Engine assuming the start time is sunset on this day (or now if between sunset and sunrise).  If no target is returned -> invalid.
 - Maybe: confirm mount is connected
 - Maybe: confirm camera is connected
-- Maybe: confirm filter wheel is connected (if needed by exposure plan)
+- Maybe: confirm filter wheel is connected (if needed by filter plan)
 - Maybe: confirm rotator is connected (if needed by target)
 - Maybe: confirm guider is connected (if needed by dithering)
 
@@ -72,6 +72,6 @@ The following is a sample of the sequence logic you'll still want.  It's not mea
 
 With this approach, you no longer need the following in your sequences:
 - Deep Space Object Sequence container.  The target is managed dynamically since the Planning Engine returns the target coordinates for slew/center/rotate.
-- Looping conditions.  The exposure plans for the selected target will automatically schedule exposures for the duration of the time available on the target.
+- Looping conditions.  The filter plans for the selected target will automatically schedule exposures for the duration of the time available on the target.
 - Timing conditions.  The start/stop times for each target, as well as the entire night, are managed automatically by the Planning Engine and injected into the Assistant container.
 - Dither trigger or instructions.  Dithering will be handled automatically based on your preferences.

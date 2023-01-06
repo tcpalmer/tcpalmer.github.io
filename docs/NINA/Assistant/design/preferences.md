@@ -7,12 +7,11 @@ title: Preferences
 
 The plugin supports a set of **_Preferences_** that drive behavior.
 
-The model for preferences is still a work in progress but will likely store preferences applicable at the following levels: global, project, and filter.  Thoughts:
-- Global
+The model for preferences is still a work in progress but will likely store preferences applicable at the following levels: project and filter.  Thoughts:
+- Project
   - UseCustomHorizon: use the custom horizon defined for the profile.
   - HorizonOffset: value (in degrees) to add to the custom horizon.
   - MinimumAltitude: value (in degrees) to use if no custom horizon is available.
-- Project
   - EnableGrader: enable/disable the simple [image grader](image_grader.html) for this project.
   - MinimumTime: minimum time (in minutes) that a target must be available for imaging to consider inclusion for a night.
   - Rule weights: a set of values (0-1) that are used to weight the impact of each rule used by the [Planning Engine](planning_engine.html).

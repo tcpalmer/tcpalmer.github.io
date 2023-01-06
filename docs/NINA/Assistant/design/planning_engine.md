@@ -13,7 +13,7 @@ Engine execution consists of a number of passes that refine the set of potential
 Pass 1 determines the set of targets that could _potentially_ be imaged at the current time.  An active target is one that is incomplete, is in the Active state, and the current date is within the project begin/end dates.
 - For each active project:
   - For each unfinished target, based on date and location:
-    - Find most inclusive twilight over all incomplete exposure plans.
+    - Find most inclusive twilight over all incomplete filter plans.
     - Is it visible (above horizon) for that begin/end twilight period?
     - Is the time-on-target > minimum imaging time?
     - If yes to all, add to potential target list
@@ -21,13 +21,13 @@ Pass 1 determines the set of targets that could _potentially_ be imaged at the c
 Potential targets have hard start/stop times determined by twilight or horizon.
 
 ## Pass 2
-Pass 2 applies the Moon Avoidance formula for each filter of each potential target, removing those exposures that fail the check.
+Pass 2 applies the Moon Avoidance formula for each filter of each potential target, removing those filter plans that fail the check.
 - For each potential target:
-  - For each incomplete exposure plan:
+  - For each incomplete filter plan:
       - If enabled, determine moon avoidance - acceptable?  Moon position can be calculated based on the midpoint of start/end times for this target.
-      - If yes, add to list of exposure plans for this target
+      - If yes, add to list of filter plans for this target
 
-If all exposure plans for a target were culled, remove it from the potential targets list.  Revise the hard start/stop times based on the final set of exposure plans since it may shift with different twilight preferences per remaining filters.
+If all filter plans for a target were culled, remove it from the potential targets list.  Revise the hard start/stop times based on the final set of filter plans since it may shift with different twilight preferences per remaining filters.
 
 ## Pass 3
 Pass 3 determines the best single target to image at the current time.
@@ -55,14 +55,14 @@ Regardless of whether only a single target was available or whether it was selec
 
 It's important to note that the cost of engine invocation is low (performance-wise).  Also, if the engine selects the same target again, the slew/center would be skipped so there's really no penalty in letting the engine decide again.  And at that future decision point, it may well select different exposure plans based on what was previously acquired.
 
-Another consideration for hard stop time is a twilight change event which might change the exposure plans possible.
+Another consideration for hard stop time is a twilight change event which might change the filter plans possible.
 
 ## Pass 4
 Pass 4 refines the order of filters/exposures for the selected target:
 - If the time span on the target includes twilight, order so that exposures with more restrictive twilight are not scheduled during those periods.  For example a NB filter set to image at astro twilight could be imaged during that time at dusk and dawn, but a WB filter could not and would require nighttime darkness before imaging.
 - Consideration may also be given to prioritizing filters with lower percent complete so that overall acquisition on a target is balanced.
 
-The final planning engine output consists of the selected target with associated ordered exposure plans.  The target as a whole and each exposure plan has a hard start time and a hard stop time.  These are used by the [Assistant Sequence Instruction](sequence_instruction.html) to establish the time limits for imaging the target:
+The final planning engine output consists of the selected target with associated ordered filter plans.  The target as a whole and each filter plan has a hard start time and a hard stop time.  These are used by the [Assistant Sequence Instruction](sequence_instruction.html) to establish the time limits for imaging the target:
 - If the hard start time is in the future, the Sequence Instruction will effectively sleep the sequence until that time.
 - Since imaging time is never simply the number of exposures times exposure time, few targets will actually complete the plan before the hard stop time.  To prevent exceeding the planned time, the Sequence Instruction will programmatically add a trigger to abort the target at the hard stop time.
 - Will also have to handle the case where a wait may be required in the middle of a set of exposures.  For example, if only a couple of NB images remain and are scheduled for astro twilight, we may have to delay until nighttime before starting on WB images.
