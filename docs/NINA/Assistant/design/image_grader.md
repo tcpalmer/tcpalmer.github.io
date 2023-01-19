@@ -15,3 +15,6 @@ As each acquired image is saved, the plugin is notified so it can update the ima
 
 ## Grading Approach
 The approach to grading images is TBD but will likely use HFR, star counts, and sky quality metrics (if available).  Algorithmic grading of images is inherently problematic and qualitative and may also depend on deviation from a small set of comparison images.  For these reasons, the grader does not delete images it determines to be unacceptable - it just doesn't increment the Accepted count.  You're still free to adjust the Accepted count manually and/or increase the total number desired.  Ultimately, rejection of images should only occur during postprocessing.
+
+## Notes
+With EnableGrader false, the plugin never updates the Accepted count.  This means that during a night of imaging, you could well select the same target again and overshoot the number of acquired images since Accepted would not have changed.

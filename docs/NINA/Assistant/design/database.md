@@ -32,6 +32,7 @@ At a high level, the database model supports the following:
 - **_Preferences_**
   - Each preference row in the table only stores a JSON string which is deserialized to yield the actual preference model object.  This is done to keep the preference model flexible since this is certain to be an area of very active early development.
   - [Preference](preferences.html) modeling and persistence are very much TBD.
+- **_AcquiredImages_** persist the metadata associated with each saved image, primarily for use by the [Image Grader](image_grader.html).
 
 ## Tables
 
@@ -79,6 +80,14 @@ It remains to be seen how we would support different parameters like gain/offset
 - ProfileId: string id of the associated NINA profile
 - FilterName: string
 - Preferences: JSON string
+
+### AcquiredImage
+- Id
+- TargetId
+- AcquiredDate
+- FilterName
+- Metadata: JSON string
+
 
 ## Other Persistence Needs
 We might also need to persist the following information:
