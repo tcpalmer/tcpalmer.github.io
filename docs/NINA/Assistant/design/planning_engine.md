@@ -13,7 +13,7 @@ Engine execution consists of a number of passes that refine the set of potential
 Pass 1 determines the set of targets that could _potentially_ be imaged at the current time.  An active target is one that is incomplete, is in the Active state, and the current date is within the project begin/end dates.
 - For each active project:
   - For each unfinished target, based on date and location:
-    - Find most inclusive twilight over all incomplete filter plans.
+    - Find most inclusive twilight over all incomplete exposure plans.
     - Is it visible (above horizon) for that begin/end twilight period?
     - Is the time-on-target > minimum imaging time?
     - If yes to all, add to potential target list

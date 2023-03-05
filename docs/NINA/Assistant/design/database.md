@@ -58,7 +58,7 @@ At a high level, the database model supports the following:
 - ROI: percentage (only applies if the camera supports subsampling)
 - 1-Many -> FilterPlan
 
-### FilterPlan
+### ExposurePlan
 - FilterName: string (_must_ match a filter name configured into NINA for this profile)
 - Exposure: real
 - Gain: int
@@ -83,6 +83,7 @@ It remains to be seen how we would support different parameters like gain/offset
 
 ### AcquiredImage
 - Id
+- ProjectId
 - TargetId
 - AcquiredDate
 - FilterName
@@ -91,6 +92,5 @@ It remains to be seen how we would support different parameters like gain/offset
 
 ## Other Persistence Needs
 We might also need to persist the following information:
-- Have a table for acquired images with foreign keys to the project/target/filter plan plus date/time, and the metrics used by the grader: HFR, star count, SQM, etc.  Could grab other available metrics like ADU stats, guiding RMS, etc.  This will permit the grader to compare a new image against those already taken for the target/filter/etc and look for significant deviations.
 - Have a table that records each unique filter used throughout an imaging session.  This could be used by a new Assistant Flat instruction to automatically take the flats needed for that night.  Would also need rotation angle if applicable.
 - Have a table that records what the planner did (and how well) on any given night: targets imaged, time on target/exposure time, time spent in slew/centers, how many MFs, etc.  Ideally, should be able to determine productive time ratio: total exposure time/total other time.

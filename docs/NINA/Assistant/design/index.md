@@ -10,7 +10,7 @@ The targets for a project also maintain the number of images you would like to a
 # Key Concepts
 - A **_Project_** models a single imaging effort.  Projects contain metadata as well as one (single frame projects) or many **_Targets_** (mosaics).
 - A **_Target_** models a single DSO or other (non-solar system) object of interest.  It contains the RA and Dec coordinates as well as a frame rotation angle and a ROI (region of interest).  Targets also reference a set of one or more **_FilterPlans_** that provide the exposure details for each applicable filter.
-- A **_FilterPlan_** provides the details that will drive a set of exposures for a single filter via the NINA Advanced Sequencer (filter name, exposure length, gain, offset, binning).
+- An **_ExposurePlan_** provides the details that will drive a set of exposures for a single filter via the NINA Advanced Sequencer (filter name, exposure length, gain, offset, binning).
 - **_Preferences_** let a user specify various criteria that drive the selection of appropriate targets as well as the details for exposures.
 - The **_Planning Engine_** reads the project database and, based on the current time, location, and preferences, decides which of multiple potential targets it should be imaging.
 
